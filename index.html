@@ -41,7 +41,7 @@
     <link rel="apple-ndor/modernizr-2.8.3.min.js"></script>
   </head>
   <body>
-    <div id="timer" class="square"/>
+    <div id="pie" class="square"/>
 
     <script src="progressbar.min.js"></script>
     <script>
@@ -54,7 +54,7 @@
       }
       var length = minutes * 60000;
 
-      var pie = new ProgressBar.Circle(timer, {
+      var pie = new ProgressBar.Circle('#pie', {
         strokeWidth: 50,
         easing: 'linear',
         duration: updateInterval,
@@ -90,7 +90,7 @@
         pie.update();
         interval = setInterval(pie.update, updateInterval);
       };
-      timer.ondblclick = pie.start;
+      document.ondblclick = pie.start;
       pie.start();
     </script>
   </body>
