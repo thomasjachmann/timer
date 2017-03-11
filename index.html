@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Timer</title>
+    <meta name="description" content="countdown timer">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+      html, body {
+        margin: 0;
+        box-sizing: border-box;
+        height: 100vh;
+        overflow: hidden;
+      }
+      html {
+        padding: 0;
+        background: #525564;
+      }
+      body {
+        padding: 20px;
+      }
+
+      .square {
+        margin: auto;
+      }
+      @media all and (orientation: landscape) {
+        .square {
+          width: calc(100vh - 40px);
+          height: calc(100vh - 40px);
+        }
+      }
+      @media all and (orientation: portrait) {
+        .square {
+          width: calc(100vw - 40px);
+          height: calc(100vw - 40px);
+        }
+      }
+    </style>
+    <link rel="apple-ndor/modernizr-2.8.3.min.js"></script>
+  </head>
+  <body>
+    <div id="timer" class="square"/>
+
+    <script src="progressbar.min.js"></script>
+    <script>
+      var minutes = Number.parseInt(location.hash.replace('#', '')),
+          updateInterval = 1000,
+          start, interval, timeout;
+
+      if (isNaN(minutes)) {
+        minutes = 5;
+      }
+      var length = minutes * 60000;
+
+      var pie = new ProgressBar.Circle(timer, {
+        strokeWidth: 50,
+        easing: 'linear',
+        duration: updateInterval,
+        trailColor: '#74828F',
+        trailWidth: 50,
+        svgStyle: null
+      });
+
+      pie.setActive = function(active) {
+        pie.set(active ? 0 : 1);
+        pie.path.setAttribute('stroke', active ? '#96C0CE' : '#C25B56');
+      };
+
+      pie.update = function() {
+        var time = new Date().getTime() - start;
+        if (time < length) {
+          var nextTime = time + updateInterval;
+          pie.animate(Math.max(nextTime / length), 1);
+        } else {
+          clearInterval(interval);
+          pie.animate(1.0);
+          timeout = setTimeout(function() {
+            pie.setActive(false);
+          }, updateInterval);
+        }
+      };
+
+      pie.start = function() {
+        start = new Date().getTime();
+        clearInterval(interval);
+        clearTimeout(timeout);
+        pie.setActive(true);
+        pie.update();
+        interval = setInterval(pie.update, updateInterval);
+      };
+      timer.ondblclick = pie.start;
+      pie.start();
+    </script>
+  </body>
+</html>
