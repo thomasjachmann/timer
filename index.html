@@ -45,50 +45,27 @@
 
     <script src="progressbar.min.js"></script>
     <script>
-      var minutes = Number.parseInt(location.hash.replace('#', '')),
-          updateInterval = 1000,
-          start, interval, timeout;
-
-      if (isNaN(minutes)) {
-        minutes = 5;
+      var duration = Number.parseInt(location.hash.replace('#', ''));
+      if (isNaN(duration)) {
+        duration = 5;
       }
-      var length = minutes * 60000;
 
       var pie = new ProgressBar.Circle('#pie', {
         strokeWidth: 50,
         easing: 'linear',
-        duration: updateInterval,
         trailColor: '#74828F',
         trailWidth: 50,
         svgStyle: null
       });
 
       pie.setActive = function(active) {
-        pie.set(active ? 0 : 1);
         pie.path.setAttribute('stroke', active ? '#96C0CE' : '#C25B56');
       };
 
-      pie.update = function() {
-        var time = new Date().getTime() - start;
-        if (time < length) {
-          var nextTime = time + updateInterval;
-          pie.animate(Math.max(nextTime / length), 1);
-        } else {
-          clearInterval(interval);
-          pie.animate(1.0);
-          timeout = setTimeout(function() {
-            pie.setActive(false);
-          }, updateInterval);
-        }
-      };
-
       pie.start = function() {
-        start = new Date().getTime();
-        clearInterval(interval);
-        clearTimeout(timeout);
+        pie.set(0);
         pie.setActive(true);
-        pie.update();
-        interval = setInterval(pie.update, updateInterval);
+        pie.animate(1, { duration: duration * 60000 }, pie.setActive);
       };
       document.ondblclick = pie.start;
       pie.start();
