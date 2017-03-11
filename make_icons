@@ -1,0 +1,23 @@
+#!/bin/bash
+
+trail=#74828F
+path=#96C0CE
+
+function make_icon {
+  local size=$1
+  local padding=$((size * 0,15))
+  local center=$((size / 2))
+  local radius=$((center - padding))
+  local farend=$((size - padding))
+
+  convert \
+    -size ${size}x${size} xc:none \
+    -fill $path  -draw "path 'M $center,$center L $center,$padding A $radius,$radius 0 0,1 $farend,$center  Z'" \
+    -fill $trail -draw "path 'M $center,$center L $farend,$center  A $radius,$radius 0 1,1 $center,$padding Z'" \
+    icon-$size.png
+}
+
+make_icon 152
+make_icon 196
+
+convert icon-196.png -define icon:auto-resize=64,48,32,16 favicon.ico
