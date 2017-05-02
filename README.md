@@ -12,3 +12,6 @@ as a hash:
 * [1 hour](http://coderei.de/timer/#60)
 
 Double click anywhere and the timer restarts.
+
+Feel free to add those links as a shortcut to your phone's homescreen. You'll
+also get a nice icon with that.
