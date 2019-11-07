@@ -7,9 +7,9 @@ red in the end.
 The default is a 5 minute countdown. But you can specify the amount of minutes
 as a hash:
 
-* [1 second](http://coderei.de/timer/#0.016666666666666667)
-* [1 minute](http://coderei.de/timer/#1)
-* [1 hour](http://coderei.de/timer/#60)
+* [1 second](https://coderei.de/timer/#0.016666666666666667)
+* [1 minute](https://coderei.de/timer/#1)
+* [1 hour](https://coderei.de/timer/#60)
 
 Double click anywhere and the timer restarts.
 
